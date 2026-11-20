@@ -1,8 +1,8 @@
 # gta6-cover-art
 
-[![make.fun](https://img.shields.io/badge/make.fun-bounty-blue)](https://make.fun/c/gta6-cover-art-01)
-[![make.fun entry](https://img.shields.io/badge/make.fun-entry-benigusman1997-green)](https://make.fun/c/gta6-cover-art-01)
-[![make.fun repo](https://img.shields.io/badge/make.fun-repo-gta6--cover--art-orange)](https://github.com/benigusman1997/gta6-cover-art)
+[![make.fun · gta6-cover-art-01](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![rank](https://make.fun/badge/gta6-cover-art-01/benigusman1997/gta6-cover-art/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![reward](https://make.fun/badge/gta6-cover-art-01/benigusman1997/gta6-cover-art/reward.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 
 **Vice City Poster Studio** — a static, offline web app that turns your photo and a caption into GTA 6-style multi-panel poster cover art, exported as a PNG to share.
 
