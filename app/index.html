@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice City Poster Studio — GTA 6-style cover art maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">VC</span>
+    <div>
+      <h1>Vice City Poster Studio</h1>
+      <p class="tagline">Turn your photo into GTA 6-style cover art</p>
+    </div>
+  </div>
+  <div class="caption-box">
+    <label for="captionInput">Caption</label>
+    <input id="captionInput" type="text" maxlength="48" value="VICE CITY" spellcheck="false">
+    <input id="subCaptionInput" type="text" maxlength="64" value="WELCOME BACK TO PARADISE" spellcheck="false">
+  </div>
+  <button id="exportBtn" class="export-btn" type="button">Export PNG</button>
+</header>
+
+<main class="layout">
+  <aside class="toolbar" aria-label="Poster options">
+    <section>
+      <h2>Template</h2>
+      <div class="template-list" id="templateList">
+        <button type="button" data-template="grid" class="template-btn is-active" aria-pressed="true">
+          <span class="thumb thumb-grid"><i></i><i></i><i></i><i></i></span>
+          2 &times; 2 Grid
+        </button>
+        <button type="button" data-template="strips" class="template-btn" aria-pressed="false">
+          <span class="thumb thumb-strips"><i></i><i></i><i></i></span>
+          3 Strips
+        </button>
+        <button type="button" data-template="hero" class="template-btn" aria-pressed="false">
+          <span class="thumb thumb-hero"><i></i><i></i><i></i></span>
+          Hero + 2
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Export size</h2>
+      <div class="size-list" id="sizeList" role="group" aria-label="Export size">
+        <button type="button" data-size="1080x1080" class="size-btn">1080 &times; 1080</button>
+        <button type="button" data-size="1080x1350" class="size-btn">1080 &times; 1350</button>
+        <button type="button" data-size="1920x1080" class="size-btn is-active">1920 &times; 1080</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Photos</h2>
+      <label class="upload-btn" for="photoInput">+ Add your photos</label>
+      <input id="photoInput" type="file" accept="image/*" multiple hidden>
+      <p class="hint">Photos stay on your machine. Never uploaded.</p>
+      <div class="photo-strip" id="photoStrip"></div>
+      <button id="fillAllBtn" type="button" class="ghost-btn">Fill all panels with selected photo</button>
+    </section>
+  </aside>
+
+  <section class="stage" aria-label="Live preview">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="posterCanvas" width="1920" height="1080"></canvas>
+      <p class="stage-hint" id="stageHint">Click a panel to select it, then drag the photo inside it.</p>
+    </div>
+  </section>
+
+  <aside class="inspector" aria-label="Selected panel controls">
+    <section>
+      <h2>Selected panel</h2>
+      <p class="panel-name" id="panelName">Panel 1 of 4</p>
+      <label class="field">
+        <span>Photo in this panel</span>
+        <select id="panelPhotoSelect"></select>
+      </label>
+      <label class="field">
+        <span>Zoom <output id="zoomOut">1.00&times;</output></span>
+        <input id="zoomSlider" type="range" min="1" max="3" step="0.01" value="1">
+      </label>
+      <div class="pan-pad">
+        <span>Pan photo</span>
+        <div class="pad-grid">
+          <button type="button" data-pan="0,-1" aria-label="Pan up">&#8593;</button>
+          <button type="button" data-pan="-1,0" aria-label="Pan left">&#8592;</button>
+          <button type="button" data-pan="0,0" class="pad-centre" aria-label="Centre photo">&#9678;</button>
+          <button type="button" data-pan="1,0" aria-label="Pan right">&#8594;</button>
+          <button type="button" data-pan="0,1" aria-label="Pan down">&#8595;</button>
+        </div>
+      </div>
+      <fieldset class="grade-field">
+        <legend>Colour grade</legend>
+        <div class="grade-list" id="gradeList">
+          <button type="button" data-grade="sunset" class="grade-btn is-active">Sunset</button>
+          <button type="button" data-grade="natural" class="grade-btn">Natural</button>
+          <button type="button" data-grade="neon" class="grade-btn">Neon</button>
+          <button type="button" data-grade="noir" class="grade-btn">Noir</button>
+        </div>
+      </fieldset>
+    </section>
+
+    <section>
+      <h2>Caption style</h2>
+      <label class="field">
+        <span>Caption size <output id="capSizeOut">100%</output></span>
+        <input id="capSizeSlider" type="range" min="60" max="140" step="1" value="100">
+      </label>
+      <div class="swatches" id="captionSwatches" role="group" aria-label="Caption colour">
+        <button type="button" data-colour="#ffffff" class="swatch is-active" style="--sw:#ffffff" aria-label="White"></button>
+        <button type="button" data-colour="#ffd166" class="swatch" style="--sw:#ffd166" aria-label="Gold"></button>
+        <button type="button" data-colour="#ff5da2" class="swatch" style="--sw:#ff5da2" aria-label="Hot pink"></button>
+        <button type="button" data-colour="#37e6ff" class="swatch" style="--sw:#37e6ff" aria-label="Cyan"></button>
+      </div>
+      <label class="check">
+        <input id="gradientFillCheck" type="checkbox" checked>
+        Sunset gradient fill on caption
+      </label>
+      <label class="check">
+        <input id="halftoneCheck" type="checkbox" checked>
+        Halftone dots + film grain
+      </label>
+    </section>
+
+    <section class="steps">
+      <h2>Three steps</h2>
+      <ol>
+        <li>Add a photo (or use a sample).</li>
+        <li>Pick a template and drag to frame it.</li>
+        <li>Export PNG and share it.</li>
+      </ol>
+    </section>
+  </aside>
+</main>
+
+<footer class="footnote">
+  <p>Original artwork made by this app. No Rockstar Games logo, artwork or font is used. Display type: Anton (SIL Open Font License, see fonts/OFL.txt).</p>
+</footer>
+
+<script src="src/render.js"></script>
+<script src="src/editor.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
